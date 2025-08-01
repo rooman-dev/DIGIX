@@ -1409,4 +1409,61 @@
 
     <script src="script.js"></script>
 </body>
+    <!-- Consultation Form Modal -->
+    <div id="consultationModal" class="consultation-modal-overlay">
+        <div class="consultation-modal-content">
+            <div class="consultation-modal-header">
+                <div class="consultation-header-content">
+                    <i class="fas fa-envelope consultation-icon"></i>
+                    <h2>Schedule a Free Consultation</h2>
+                </div>
+                <button class="consultation-close" onclick="closeConsultationForm()">&times;</button>
+            </div>
+            <div class="consultation-modal-body">
+                <form id="consultationForm" class="consultation-form">
+                    <div class="consultation-form-group">
+                        <input type="text" id="fullName" name="fullName" placeholder="Full Name" required>
+                    </div>
+                    
+                    <div class="consultation-form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+                    </div>
+                    
+                    <div class="consultation-form-group">
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="consultation-form-group">
+                        <input type="text" id="company" name="company" placeholder="Company (Optional)">
+                    </div>
+                    
+                    <div class="consultation-form-group">
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">Select Service Interest</option>
+                            <option value="game-development">Game Development Training</option>
+                            <option value="animation-vfx">Animation & VFX Training</option>
+                            <option value="web-development">Web Development Training</option>
+                            <option value="3d-modeling">3D Modeling & Rendering</option>
+                            <option value="ui-ux-design">UI/UX Design Services</option>
+                            <option value="ai-cybersecurity">AI & Cybersecurity Solutions</option>
+                            <option value="digital-strategy">Digital Strategy Consultation</option>
+                            <option value="team-augmentation">Team Augmentation</option>
+                            <option value="startup-incubation">Startup Incubation</option>
+                            <option value="custom-solution">Custom Solution</option>
+                        </select>
+                    </div>
+                    
+                    <div class="consultation-form-group">
+                        <textarea id="message" name="message" placeholder="Tell us about your project or requirements..." rows="4"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="consultation-submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </html>

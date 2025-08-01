@@ -563,3 +563,76 @@ function animateCounter(element, target, suffix = '', duration = 2000) {
         }
     }, 16);
 }
+
+// Consultation Form Modal Functions
+function openConsultationForm() {
+    const modal = document.getElementById('consultationModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+function closeConsultationForm() {
+    const modal = document.getElementById('consultationModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+    
+    // Reset form
+    document.getElementById('consultationForm').reset();
+}
+
+// Close modal when clicking outside
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('consultationModal');
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeConsultationForm();
+        }
+    });
+    
+    // Handle form submission
+    const form = document.getElementById('consultationForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // Show success message
+        showConsultationSuccess();
+        
+        // Here you would typically send the data to your server
+        console.log('Consultation request:', data);
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeConsultationForm();
+        }
+    });
+});
+
+function showConsultationSuccess() {
+    const modal = document.getElementById('consultationModal');
+    const modalBody = modal.querySelector('.consultation-modal-body');
+    
+    modalBody.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: white;">
+            <div style="width: 80px; height: 80px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                <i class="fas fa-check" style="font-size: 2rem; color: #10b981;"></i>
+            </div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: white;">Request Submitted Successfully!</h3>
+            <p style="font-size: 1rem; margin-bottom: 2rem; opacity: 0.9;">Thank you for your interest in DIGIX Lab. Our team will contact you within 24 hours to schedule your free consultation.</p>
+            <button onclick="closeConsultationForm()" style="background: rgba(255, 255, 255, 0.2); border: 2px solid white; color: white; padding: 0.75rem 2rem; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                Close
+            </button>
+        </div>
+    `;
+    
+    // Auto close after 5 seconds
+    setTimeout(() => {
+        closeConsultationForm();
+    }, 5000);
+}
