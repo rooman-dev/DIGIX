@@ -116,32 +116,37 @@ tabButtons.forEach(button => {
 // Contact Form Handling
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Get form data
     const formData = new FormData(contactForm);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const subject = formData.get('subject');
-    const message = formData.get('message');
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message')
+    };
     
-    // Simple validation
-    if (!name || !email || !subject || !message) {
-        alert('Please fill in all fields.');
-        return;
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('Message sent successfully!');
+            contactForm.reset();
+        } else {
+            alert('Failed to send message. Please try again.');
+        }
+    } catch (error) {
+        alert('Error occurred. Please try again.');
     }
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address.');
-        return;
-    }
-    
-    // Simulate form submission
-    alert('Thank you for your message! We will get back to you soon.');
-    contactForm.reset();
 });
 
 // Scroll animations
@@ -251,73 +256,44 @@ document.addEventListener('keydown', (e) => {
 document.getElementById('registrationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.innerHTML;
-    
-    // Show loading state
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
+    const formData = new FormData(e.target);
+    const registrationData = {
+        course: document.getElementById('selectedCourseName').textContent,
+        fullName: formData.get('fullName'),
+        phone: formData.get('phone'),
+        email: formData.get('email'),
+        age: formData.get('age'),
+        education: formData.get('education'),
+        field: formData.get('field'),
+        experience: formData.get('experience'),
+        currentRole: formData.get('currentRole'),
+        motivation: formData.get('motivation'),
+        schedule: formData.get('schedule'),
+        startDate: formData.get('startDate'),
+        questions: formData.get('questions'),
+        newsletter: formData.get('newsletter') === 'on',
+        consultation: formData.get('consultation') === 'on'
+    };
     
     try {
-        // Get form data
-        const formData = new FormData(e.target);
-        const registrationData = {
-            course: document.getElementById('selectedCourseName').textContent,
-            fullName: formData.get('fullName'),
-            phone: formData.get('phone'),
-            email: formData.get('email'),
-            age: formData.get('age'),
-            education: formData.get('education'),
-            field: formData.get('field'),
-            experience: formData.get('experience'),
-            currentRole: formData.get('currentRole'),
-            motivation: formData.get('motivation'),
-            schedule: formData.get('schedule'),
-            startDate: formData.get('startDate'),
-            questions: formData.get('questions'),
-            newsletter: formData.get('newsletter') === 'on',
-            consultation: formData.get('consultation') === 'on'
-        };
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(registrationData)
+        });
         
-        // Validate required fields
-        if (!registrationData.fullName || !registrationData.phone || !registrationData.email || !registrationData.motivation) {
-            throw new Error('Please fill in all required fields.');
+        const result = await response.json();
+        
+        if (result.success) {
+            showFormMessage('success', `Thank you, ${registrationData.fullName}! Your registration has been submitted successfully.`);
+            setTimeout(() => closeRegistrationModal(), 3000);
+        } else {
+            showFormMessage('error', 'Failed to submit registration. Please try again.');
         }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(registrationData.email)) {
-            throw new Error('Please enter a valid email address.');
-        }
-        
-        // Phone validation (basic)
-        const phoneRegex = /^[\+]?[0-9\-\(\)\s]{10,}$/;
-        if (!phoneRegex.test(registrationData.phone)) {
-            throw new Error('Please enter a valid phone number.');
-        }
-        
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Here you would typically send the data to your server
-        console.log('Registration Data:', registrationData);
-        
-        // Show success message
-        showFormMessage('success', `Thank you, ${registrationData.fullName}! Your registration for "${registrationData.course}" has been submitted successfully. We will contact you within 24 hours at ${registrationData.phone} or ${registrationData.email}.`);
-        
-        // Reset form after success
-        setTimeout(() => {
-            closeRegistrationModal();
-        }, 3000);
-        
     } catch (error) {
-        console.error('Registration error:', error);
-        showFormMessage('error', error.message);
-    } finally {
-        // Reset button state
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
+        showFormMessage('error', 'Error occurred. Please try again.');
     }
 });
 
@@ -592,18 +568,42 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle form submission
     const form = document.getElementById('consultationForm');
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Get form data
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
+        const data = {
+            fullName: formData.get('fullName'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            company: formData.get('company'),
+            serviceType: formData.get('serviceType'),
+            message: formData.get('message')
+        };
         
-        // Show success message
-        showConsultationSuccess();
-        
-        // Here you would typically send the data to your server
-        console.log('Consultation request:', data);
+        try {
+            const response = await fetch('/api/consultation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showConsultationSuccess();
+                console.log('Consultation request:', data);
+                setTimeout(() => {
+                    closeConsultationForm();
+                }, 3000);
+            } else {
+                alert('Failed to send consultation request. Please try again.');
+            }
+        } catch (error) {
+            alert('Error occurred. Please try again.');
+        }
     });
     
     // Close modal with Escape key
