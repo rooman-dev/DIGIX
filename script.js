@@ -1,17 +1,91 @@
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
+const body = document.body;
+
+// Create mobile menu overlay
+const mobileOverlay = document.createElement('div');
+mobileOverlay.className = 'mobile-menu-overlay';
+document.body.appendChild(mobileOverlay);
 
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
+    mobileOverlay.classList.toggle('active');
+    body.classList.toggle('menu-open');
 });
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+// Close mobile menu when clicking overlay
+mobileOverlay.addEventListener('click', () => {
+    closeMobileMenu();
+});
+
+// Handle dropdown toggles in mobile
+document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
+    const link = dropdown.querySelector('.nav-link');
+    link.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            dropdown.classList.toggle('active');
+        }
+    });
+});
+
+// Handle dropdown links navigation
+document.querySelectorAll('.dropdown-content a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        
+        // Check if it's a hash link
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            closeMobileMenu();
+            
+            // Wait for menu to close, then scroll
+            setTimeout(() => {
+                const target = document.querySelector(href);
+                if (target) {
+                    const headerHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20; // Extra 20px for spacing
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 300);
+        }
+    });
+});
+
+// Close mobile menu function
+function closeMobileMenu() {
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
+    mobileOverlay.classList.remove('active');
+    body.classList.remove('menu-open');
+    
+    // Close all dropdowns
+    document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+    });
+}
+
+// Close mobile menu when clicking on main nav links
+document.querySelectorAll('.nav-link:not(.dropdown .nav-link)').forEach(n => n.addEventListener('click', () => {
+    closeMobileMenu();
 }));
+
+// Prevent body scroll when menu is open
+const style = document.createElement('style');
+style.textContent = `
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+    }
+`;
+document.head.appendChild(style);
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -19,9 +93,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            const headerHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = target.offsetTop - headerHeight - 20; // Extra 20px for spacing
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
             });
         }
     });
