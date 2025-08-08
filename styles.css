@@ -803,15 +803,14 @@ body {
 }
 
 .about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .about-text h2 {
-    text-align: left;
-    margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
 }
 
 .about-text p {
@@ -819,6 +818,9 @@ body {
     line-height: 1.8;
     color: var(--muted-text);
     margin-bottom: 1.5rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
 }
 
 .vision-mission {
@@ -858,84 +860,95 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Enhanced Story Section */
+.vision,
+.mission {
+    padding: 1.5rem;
+    background: var(--light-bg);
+    border-radius: 12px;
+    border-left: 4px solid var(--electric-blue);
+}
+
+.vision h3,
+.mission h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--primary-text-light);
+}
+
+.vision h3 i,
+.mission h3 i {
+    color: var(--electric-blue);
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Story Content Section */
 .story-content {
-    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .story-chapters-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-    align-items: stretch;
-}
-
-/* Keep 4 columns on all desktop sizes */
-@media (min-width: 1200px) {
-    .story-chapters-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-    }
-}
-
-/* 2 columns on tablets */
-@media (max-width: 1024px) {
-    .story-chapters-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .story-chapters-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+    width: 100%;
 }
 
 .story-chapter {
-    padding: 4rem;
-    background: linear-gradient(135deg, var(--light-bg) 0%, var(--cool-gray) 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     border-radius: 16px;
     border-left: 4px solid var(--electric-blue);
+    padding: 2rem;
     position: relative;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    min-height: 320px;
+    min-height: 280px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .story-chapter:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
 }
 
 .story-chapter h3 {
-    display:flex;
+    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1.5rem;
+    gap: 0.75rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: var(--primary-text-light);
+    margin-bottom: 1.5rem;
+    color: #1e293b;
 }
 
 .story-chapter h3 i {
     color: var(--electric-blue);
-    font-size: 0.85rem;
-    padding: 0.5rem;
-    background: rgba(37, 99, 235, 0.1);
+    font-size: 1.2rem;
+    padding: 0.8rem;
+    background: rgba(59, 130, 246, 0.1);
     border-radius: 50%;
     flex-shrink: 0;
 }
 
 .story-chapter p {
-    font-size: 0.8rem;
-    line-height: 1.5;
-    color: var(--muted-text);
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #64748b;
+    margin: 0;
     text-align: left;
     flex-grow: 1;
 }
@@ -945,37 +958,190 @@ body {
     font-weight: 600;
 }
 
+/* Story Achievements Section */
 .story-achievements {
     background: linear-gradient(135deg, var(--electric-blue) 0%, var(--violet-indigo) 100%);
     color: white;
-    padding: 2.5rem;
-    border-radius: 16px;
-    margin-bottom: 2rem;
+    padding: 3rem;
+    border-radius: 20px;
+    margin: 4rem auto 2rem auto;
+    text-align: center;
+    max-width: 900px;
+    box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
 }
 
 .story-achievements h3 {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1.4rem;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     color: white;
 }
 
 .story-achievements h3 i {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1.2rem;
-    padding: 0.5rem;
+    font-size: 1.6rem;
+    padding: 0.8rem;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
 }
 
 .achievements-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+}
+
+.achievement-item {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.achievement-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.achievement-item i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.achievement-item .number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.achievement-item .label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* Responsive Design for Story Section */
+@media (min-width: 1200px) {
+    .story-chapters-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .about-content {
+        padding: 0 1.5rem;
+    }
+    
+    .story-chapters-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .story-chapter {
+        padding: 1.5rem;
+        min-height: 250px;
+    }
+    
+    .story-achievements {
+        padding: 2.5rem 2rem;
+        margin: 3rem auto 1rem auto;
+    }
+    
+    .story-achievements h3 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 80px 0;
+    }
+    
+    .about-content {
+        padding: 0 1rem;
+    }
+    
+    .story-chapters-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .story-chapter {
+        padding: 1.5rem;
+        min-height: auto;
+    }
+    
+    .story-chapter h3 {
+        font-size: 1.2rem;
+    }
+    
+    .story-achievements {
+        padding: 2rem 1.5rem;
+        margin: 2rem auto 1rem auto;
+    }
+    
+    .story-achievements h3 {
+        font-size: 1.6rem;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .achievements-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .story-chapter {
+        padding: 1.2rem;
+    }
+    
+    .story-chapter h3 {
+        font-size: 1.1rem;
+        gap: 0.5rem;
+    }
+    
+    .story-chapter h3 i {
+        padding: 0.6rem;
+    }
+    
+    .achievements-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .achievement-item {
+        padding: 1.5rem 1rem;
+    }
+    
+    .achievement-item .number {
+        font-size: 2rem;
+    }
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .achievement-item {
@@ -2108,12 +2274,12 @@ body {
     }
 
     .story-chapters-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
 
     .achievements-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
 
@@ -2527,6 +2693,21 @@ body {
     .container {
         padding: 0 1rem;
     }
+
+    /* Partnerships Mobile */
+    .partnerships-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .partnership-category {
+        padding: 1.5rem;
+    }
+
+    .partnership-category h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
 /* Tablet Responsive (768px - 1024px) */
@@ -2683,6 +2864,16 @@ body {
         font-size: 1.1rem;
         max-width: 600px;
         margin: 0 auto 3rem;
+    }
+
+    /* Partnerships Tablet */
+    .partnerships-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .partnership-category {
+        padding: 2rem;
     }
 }
 
@@ -3438,6 +3629,8 @@ html {
 .partnerships {
     padding: 100px 0;
     background: linear-gradient(135deg, var(--light-bg) 0%, var(--cool-gray) 100%);
+    width: 100%;
+    overflow: hidden;
 }
 
 .partnerships .section-subtitle {
@@ -3451,9 +3644,11 @@ html {
 }
 
 .partnerships-content {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    width: 100%;
 }
 
 .partnership-category {
@@ -3462,6 +3657,8 @@ html {
     padding: 2.5rem;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--cool-gray);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .partnership-category h3 {
